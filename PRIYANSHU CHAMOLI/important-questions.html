@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Important Questions - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                <span>EduPortal</span>
+            </a>
+            
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="question-search" placeholder="Search questions...">
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="notes-first-year.html">Notes</a></li>
+                <li><a href="coding-practice.html">Coding Practice</a></li>
+                <li><a href="important-questions.html" class="active">Questions</a></li>
+                <li id="auth-buttons" class="auth-buttons"></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="container section">
+        <h2 class="section-title">Important Exam Questions</h2>
+        
+        <div class="cards-grid" id="questions-container">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script>
+        const questionsDB = [
+            { subject: "HTML", q: "Explain HTML5 Semantic Elements.", year: "1st Year" },
+            { subject: "HTML", q: "How do you create a responsive layout without CSS frameworks?", year: "1st Year" },
+            { subject: "CSS", q: "Explain CSS Grid Architecture.", year: "1st Year" },
+            { subject: "CSS", q: "Difference between absolute and relative positioning?", year: "1st Year" },
+            { subject: "JavaScript", q: "What is Event Bubbling and Capturing?", year: "1st Year" },
+            { subject: "JavaScript", q: "Explain Promises and Async/Await.", year: "1st Year" },
+            { subject: "Python", q: "Explain Python Decorators.", year: "1st Year" },
+            { subject: "Data Structures", q: "Explain AVL Tree Rotations.", year: "2nd Year" },
+            { subject: "OS", q: "What is Deadlock and how is it prevented?", year: "2nd Year" }
+        ];
+
+        const container = document.getElementById('questions-container');
+        const searchInput = document.getElementById('question-search');
+
+        function renderQuestions(filter = "") {
+            container.innerHTML = "";
+            const filtered = questionsDB.filter(item => 
+                item.q.toLowerCase().includes(filter.toLowerCase()) || 
+                item.subject.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "glass glass-card";
+                card.innerHTML = `
+                    <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">${item.subject} (${item.year})</span>
+                    <h4 style="margin-top: 10px;">${item.q}</h4>
+                `;
+                container.appendChild(card);
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = "<p>No questions found.</p>";
+            }
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            renderQuestions(e.target.value);
+        });
+
+        renderQuestions();
+    </script>
+</body>
+</html>

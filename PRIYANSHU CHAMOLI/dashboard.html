@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container nav-container" style="max-width: 100%; padding: 0 40px;">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                <span>EduPortal</span>
+            </a>
+            
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li id="auth-buttons" class="auth-buttons">
+                    <!-- Populated by main.js -->
+                </li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <img src="images/default-avatar.png" alt="Profile Photo" id="dash-photo">
+                <h3 id="dash-name">Loading...</h3>
+                <p id="dash-studentId" style="font-size: 0.9rem;">...</p>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="notes-first-year.html"><i class="fas fa-book"></i> First Year Notes</a></li>
+                <li><a href="notes-second-year.html"><i class="fas fa-book"></i> Second Year Notes</a></li>
+                <li><a href="notes-third-year.html"><i class="fas fa-book"></i> Third Year Notes</a></li>
+                <li><a href="coding-practice.html"><i class="fas fa-laptop-code"></i> Coding Practice</a></li>
+                <li><a href="important-questions.html"><i class="fas fa-question-circle"></i> Important Questions</a></li>
+                <li><a href="#"><i class="fas fa-download"></i> Download Notes</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <h2 class="mb-4">Welcome back, <span id="dash-welcome-name">Student</span>!</h2>
+            
+            <div class="stats-grid">
+                <div class="glass glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Course</h4>
+                        <h3 id="dash-course">...</h3>
+                    </div>
+                </div>
+                <div class="glass glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Year</h4>
+                        <h3 id="dash-year">...</h3>
+                    </div>
+                </div>
+                <div class="glass glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Email</h4>
+                        <h3 id="dash-email" style="font-size: 1.1rem; word-break: break-all;">...</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mb-2">Quick Access</h3>
+            <div class="cards-grid">
+                <a href="notes-first-year.html" style="text-decoration: none; color: inherit;">
+                    <div class="glass glass-card feature-card">
+                        <i class="fas fa-book feature-icon"></i>
+                        <h3>Notes</h3>
+                        <p>Access your course materials.</p>
+                    </div>
+                </a>
+                <a href="coding-practice.html" style="text-decoration: none; color: inherit;">
+                    <div class="glass glass-card feature-card">
+                        <i class="fas fa-code feature-icon"></i>
+                        <h3>Practice</h3>
+                        <p>Write HTML, CSS, JS, Python & C.</p>
+                    </div>
+                </a>
+                <a href="important-questions.html" style="text-decoration: none; color: inherit;">
+                    <div class="glass glass-card feature-card">
+                        <i class="fas fa-clipboard-list feature-icon"></i>
+                        <h3>Questions</h3>
+                        <p>Prepare for upcoming exams.</p>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

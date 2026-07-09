@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="glass glass-card">
+                <div class="auth-header">
+                    <a href="index.html" class="logo" style="justify-content: center; margin-bottom: 10px;">
+                        <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                        <span>EduPortal</span>
+                    </a>
+                    <h2>Create an Account</h2>
+                    <p>Join the best student learning platform</p>
+                </div>
+
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div style="color: var(--danger); text-align: center; margin-bottom: 15px;" id="error-msg"></div>
+                    
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" name="name" class="form-control" required placeholder="John Doe">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label>Student ID</label>
+                            <input type="text" name="studentId" class="form-control" required placeholder="STU12345">
+                        </div>
+                        <div class="form-group">
+                            <label>Roll Number</label>
+                            <input type="text" name="rollNumber" class="form-control" required placeholder="101">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label>Course</label>
+                            <select name="course" class="form-control" required>
+                                <option value="">Select Course</option>
+                                <option value=" CS">CS</option>
+                                <option value=" IT"> IT</option>
+                                
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <select name="year" class="form-control" required>
+                                <option value="">Select Year</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>                              
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" class="form-control" required placeholder="john@college.edu">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required placeholder="********">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirmPassword" class="form-control" required placeholder="********">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Login Here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

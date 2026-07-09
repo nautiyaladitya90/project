@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container nav-container" style="max-width: 100%; padding: 0 40px;">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                <span>EduPortal</span>
+            </a>
+            
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li id="auth-buttons" class="auth-buttons"></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <img src="images/default-avatar.png" alt="Profile Photo" id="dash-photo">
+                <h3 id="dash-name">Loading...</h3>
+                <p id="dash-studentId" style="font-size: 0.9rem;">...</p>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="notes-first-year.html"><i class="fas fa-book"></i> First Year Notes</a></li>
+                <li><a href="notes-second-year.html"><i class="fas fa-book"></i> Second Year Notes</a></li>
+                <li><a href="notes-third-year.html"><i class="fas fa-book"></i> Third Year Notes</a></li>
+                <li><a href="coding-practice.html"><i class="fas fa-laptop-code"></i> Coding Practice</a></li>
+                <li><a href="important-questions.html"><i class="fas fa-question-circle"></i> Important Questions</a></li>
+                <li><a href="profile.html" class="active"><i class="fas fa-user-edit"></i> Profile</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <h2 class="mb-4">My Profile</h2>
+            
+            <div class="glass glass-card" style="max-width: 800px;">
+                <form id="profileForm" onsubmit="handleProfileUpdate(event)">
+                    <div style="color: var(--success); margin-bottom: 15px;" id="success-msg"></div>
+
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <img src="images/default-avatar.png" alt="Avatar" id="profile-img-preview" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin-bottom: 10px;">
+                        <div>
+                            <input type="file" id="profile-photo-upload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+                            <button type="button" class="btn btn-outline" onclick="document.getElementById('profile-photo-upload').click();" style="padding: 5px 15px; font-size: 0.8rem;">Change Photo</button>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="prof-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Student ID (Non-editable)</label>
+                            <input type="text" id="prof-studentId" class="form-control" readonly style="background: rgba(0,0,0,0.05);">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="prof-email" class="form-control" required>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid var(--border-solid); margin: 30px 0;">
+                    <h3 class="mb-2">Change Password</h3>
+
+                    <div class="form-group">
+                        <label>New Password (leave blank to keep current)</label>
+                        <input type="password" id="prof-password" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if(currentUser) {
+                document.getElementById('prof-name').value = currentUser.name;
+                document.getElementById('prof-studentId').value = currentUser.studentId;
+                document.getElementById('prof-email').value = currentUser.email;
+                if (currentUser.photo) {
+                    document.getElementById('profile-img-preview').src = currentUser.photo;
+                }
+            }
+        });
+
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-img-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleProfileUpdate(event) {
+            event.preventDefault();
+            const newName = document.getElementById('prof-name').value;
+            const newEmail = document.getElementById('prof-email').value;
+            const newPassword = document.getElementById('prof-password').value;
+            const newPhoto = document.getElementById('profile-img-preview').src;
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            const userIndex = users.findIndex(u => u.studentId === currentUser.studentId);
+            
+            if (userIndex !== -1) {
+                users[userIndex].name = newName;
+                users[userIndex].email = newEmail;
+                users[userIndex].photo = newPhoto;
+                if (newPassword) {
+                    users[userIndex].password = newPassword;
+                }
+
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Update session
+                currentUser.name = newName;
+                currentUser.email = newEmail;
+                currentUser.photo = newPhoto;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                document.getElementById('success-msg').textContent = "Profile updated successfully!";
+                setTimeout(() => location.reload(), 1500);
+            }
+        }
+    </script>
+</body>
+</html>

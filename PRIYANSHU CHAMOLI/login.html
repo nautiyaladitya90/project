@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="glass glass-card">
+                <div class="auth-header">
+                    <a href="index.html" class="logo" style="justify-content: center; margin-bottom: 10px;">
+                        <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                        <span>EduPortal</span>
+                    </a>
+                    <h2>Welcome Back</h2>
+                    <p>Login to your student dashboard</p>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div style="color: var(--danger); text-align: center; margin-bottom: 15px;" id="error-msg"></div>
+                    
+                    <div class="form-group">
+                        <label>Student ID</label>
+                        <input type="text" name="studentId" class="form-control" required placeholder="STU12345">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required placeholder="********">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="register.html">Register Here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

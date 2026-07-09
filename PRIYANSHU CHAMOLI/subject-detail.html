@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Detail - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                <span>EduPortal</span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="notes-first-year.html" class="active">Notes</a></li>
+                <li><a href="coding-practice.html">Coding Practice</a></li>
+                <li><a href="important-questions.html">Questions</a></li>
+                <li id="auth-buttons" class="auth-buttons"></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 40px 20px;">
+        <h2 id="subject-title" style="margin-bottom: 30px; text-align: center; color: var(--primary);">Subject Notes</h2>
+        
+        <div class="tabs" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
+            <button class="btn btn-primary" id="btn-notes" onclick="switchDocTab('Note')">Notes & PDFs</button>
+            <button class="btn btn-outline" id="btn-syllabus" onclick="switchDocTab('Syllabus')">Syllabus</button>
+            <button class="btn btn-outline" id="btn-pyq" onclick="switchDocTab('PYQ')">Previous Year Papers</button>
+        </div>
+
+        <div id="pdf-container" class="subject-grid">
+            <!-- Loading -->
+            <p style="text-align: center; grid-column: 1 / -1;">Loading documents...</p>
+        </div>
+    </main>
+
+    <style>
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    </style>
+
+    <script>
+        let allDocs = [];
+        let currentTab = 'Note';
+
+        function switchDocTab(type) {
+            currentTab = type;
+            document.getElementById('btn-notes').className = type === 'Note' ? 'btn btn-primary' : 'btn btn-outline';
+            document.getElementById('btn-syllabus').className = type === 'Syllabus' ? 'btn btn-primary' : 'btn btn-outline';
+            document.getElementById('btn-pyq').className = type === 'PYQ' ? 'btn btn-primary' : 'btn btn-outline';
+            renderDocs();
+        }
+
+        function renderDocs() {
+            const container = document.getElementById('pdf-container');
+            const filtered = allDocs.filter(d => (d.document_type || 'Note') === currentTab);
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="text-align: center; grid-column: 1 / -1;">No ${currentTab}s uploaded yet for this subject.</p>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(doc => `
+                <div class="glass glass-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <i class="fas fa-file-pdf" style="font-size: 3rem; color: #ff4757; margin-bottom: 15px;"></i>
+                    <h4 style="margin-bottom: 10px; word-break: break-all;">${doc.originalname}</h4>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Uploaded: ${new Date(doc.uploaded_at).toLocaleDateString()}</span>
+                    <a href="uploads/${doc.filename}" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: auto;">
+                        <i class="fas fa-download"></i> Download ${currentTab}
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject') || 'Unknown Subject';
+            document.getElementById('subject-title').innerText = subject;
+
+            try {
+                const res = await fetch('api/notes.php');
+                const data = await res.json();
+                
+                // Filter by subject
+                allDocs = data.filter(n => n.subject === subject);
+                renderDocs();
+            } catch (err) {
+                console.error(err);
+                document.getElementById('pdf-container').innerHTML = '<p style="text-align: center; color: red;">Error loading documents.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

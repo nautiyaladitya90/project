@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Notes & Coding Practice Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                <span>
+                     <h3>EducationPortal</h3>
+                    </span>
+            </a>
+
+
+            <div class="search-container" id="auth-only-search" style="display: none;">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search notes, topics, questions...">
+            </div>
+
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li id="nav-dashboard" style="display: none;"><a href="dashboard.html">Dashboard</a></li>
+                <li id="nav-login"><a href="login.html" class="btn btn-outline" style="padding: 5px 15px;">Login</a></li>
+                <li id="nav-logout" style="display: none;"><a href="#" class="btn btn-outline" style="padding: 5px 15px; border-color: var(--danger); color: var(--danger);" onclick="logoutUser()">Logout</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="container hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Master Your College Journey with Ease</h1>
+            <p class="hero-subtitle">Access comprehensive notes for all years, practice coding directly in your browser,
+                and prepare for exams with curated important questions.</p>
+            <div class="hero-buttons">
+                <a href="register.html" class="btn btn-primary" id="get-started-btn">Get Started</a>
+                <a href="notes-first-year.html" class="btn btn-outline" id="browse-notes-btn" style="display: none;">Browse Notes</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="pthotooo/learning.jpg"
+                alt="Student Learning" style="color-interpolation-filters: auto; width: 100%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="index.html" class="logo mb-2">
+                        <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+                        <span>EducatioPortal</span>
+                    </a>
+                    <p>Empowering students with accessible education and practice tools.</p>
+                    <div class="social-links mt-2">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="notes-first-year.html">First Year Notes</a></li>
+                        <li><a href="coding-practice.html">Coding Practice</a></li>
+                        <li><a href="admin.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope mr-2"></i> info@eduportal.com</li>
+                        <li><i class="fas fa-phone mr-2"></i> +1 234 567 890</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> College Campus, Build 4</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 College Notes & Coding Practice Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

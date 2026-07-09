@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" style="background: var(--surface-opaque);">
+            <div class="sidebar-profile">
+                <h3>Admin Panel</h3>
+                <p style="font-size: 0.9rem; color: var(--success);">Superuser</p>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="#" class="admin-tab active" data-target="overview"><i class="fas fa-chart-line"></i> Overview</a></li>
+                <li><a href="#" class="admin-tab" data-target="upload-notes"><i class="fas fa-file-upload"></i> Upload Notes</a></li>
+                <li><a href="#" class="admin-tab" data-target="manage-pdfs"><i class="fas fa-file-pdf"></i> Manage PDFs</a></li>
+                <li><a href="#" class="admin-tab" data-target="add-subjects"><i class="fas fa-plus-circle"></i> Add Subjects</a></li>
+                <li><a href="#" class="admin-tab" data-target="manage-students"><i class="fas fa-users"></i> Manage Students</a></li>
+                <li><a href="#" class="admin-tab" data-target="announcements"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Exit Admin</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- OVERVIEW SECTION -->
+            <div id="overview" class="admin-section" style="display: block;">
+                <h2 class="mb-4">Admin Dashboard Overview</h2>
+                
+                <div class="stats-grid">
+                    <div class="glass glass-card stat-card">
+                        <div class="stat-icon" style="background: var(--primary);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Total Students</h4>
+                            <h3>1,204</h3>
+                        </div>
+                    </div>
+                    <div class="glass glass-card stat-card">
+                        <div class="stat-icon" style="background: var(--success);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Total Notes</h4>
+                            <h3>45</h3>
+                        </div>
+                    </div>
+                    <div class="glass glass-card stat-card">
+                        <div class="stat-icon" style="background: var(--accent);">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Questions Bank</h4>
+                            <h3>532</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass glass-card mt-4">
+                    <h3 class="mb-4">Recent Activity</h3>
+                    <p>No recent activity to show.</p>
+                </div>
+            </div>
+
+            <!-- UPLOAD NOTES SECTION -->
+            <div id="upload-notes" class="admin-section" style="display: none;">
+                <h2 class="mb-4">Upload Notes</h2>
+                <div class="glass glass-card">
+                    <form id="uploadNoteForm">
+                        <div class="form-group">
+                            <label>Select Year</label>
+                            <select class="form-control" name="year">
+                                <option value="Year 1">1st Year</option>
+                                <option value="Year 2">2nd Year</option>
+                                <option value="Year 3">3rd Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Semester</label>
+                            <select class="form-control" name="semester">
+                                <option value="Sem 1">Semester 1</option>
+                                <option value="Sem 2">Semester 2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject Name</label>
+                            <input type="text" class="form-control" name="subject" placeholder="e.g. Data Structures" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Document Type</label>
+                            <select class="form-control" name="document_type" required>
+                                <option value="Note">Note / PDF</option>
+                                <option value="Syllabus">Syllabus</option>
+                                <option value="PYQ">Previous Year Question Paper (PYQ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload PDF Note</label>
+                            <input type="file" class="form-control" name="notePdf" accept=".pdf" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Upload Note</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- MANAGE PDFS SECTION -->
+            <div id="manage-pdfs" class="admin-section" style="display: none;">
+                <h2 class="mb-4">Manage PDFs</h2>
+                <div class="glass glass-card">
+                    <p>List of all uploaded PDFs from the database.</p>
+                    <table style="width: 100%; text-align: left; margin-top: 15px; border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid var(--border-solid);">
+                            <th style="padding: 10px;">Subject</th>
+                            <th>File Name</th>
+                            <th>Action</th>
+                        </tr>
+                        <tbody id="pdfsTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ADD SUBJECTS SECTION -->
+            <div id="add-subjects" class="admin-section" style="display: none;">
+                <h2 class="mb-4">Add New Subject</h2>
+                <div class="glass glass-card">
+                    <form id="addSubjectForm">
+                        <div class="form-group">
+                            <label>Subject Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="e.g. Operating Systems" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Year & Semester</label>
+                            <input type="text" class="form-control" name="year_sem" placeholder="e.g. Year 2, Sem 3" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Subject</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- MANAGE STUDENTS SECTION -->
+            <div id="manage-students" class="admin-section" style="display: none;">
+                <h2 class="mb-4">Manage Students</h2>
+                <div class="glass glass-card">
+                    <p>Registered Students Directory.</p>
+                    <table style="width: 100%; text-align: left; margin-top: 15px; border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid var(--border-solid);">
+                            <th style="padding: 10px;">Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                        </tr>
+                        <tbody id="studentsTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ANNOUNCEMENTS SECTION -->
+            <div id="announcements" class="admin-section" style="display: none;">
+                <h2 class="mb-4">Announcements</h2>
+                <div class="glass glass-card">
+                    <form id="announcementForm">
+                        <div class="form-group">
+                            <label>Announcement Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="e.g. Exams Postponed" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" name="message" rows="4" placeholder="Type your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Post Announcement</button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Admin Tab Switching Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.admin-tab');
+            const sections = document.querySelectorAll('.admin-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Add active to clicked tab
+                    tab.classList.add('active');
+
+                    // Hide all sections
+                    sections.forEach(sec => sec.style.display = 'none');
+
+                    // Show target section
+                    const targetId = tab.getAttribute('data-target');
+                    document.getElementById(targetId).style.display = 'block';
+
+                    // Load Data if needed
+                    if (targetId === 'manage-pdfs') loadPDFs();
+                    if (targetId === 'manage-students') loadStudents();
+                });
+            });
+
+            // Forms Submit Handlers
+            document.getElementById('uploadNoteForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                try {
+                    const res = await fetch('api/notes.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
+                    if (data.id) {
+                        alert('Note uploaded successfully!');
+                        e.target.reset();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                } catch(err) {
+                    alert('Upload failed: ' + err.message);
+                }
+            });
+
+            document.getElementById('addSubjectForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const obj = Object.fromEntries(formData);
+                try {
+                    const res = await fetch('api/subjects.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(obj)
+                    });
+                    const data = await res.json();
+                    if(data.id) {
+                        alert('Subject added!');
+                        e.target.reset();
+                    }
+                } catch(err) {}
+            });
+
+            document.getElementById('announcementForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const obj = Object.fromEntries(formData);
+                try {
+                    const res = await fetch('api/announcements.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(obj)
+                    });
+                    const data = await res.json();
+                    if(data.id) {
+                        alert('Announcement posted!');
+                        e.target.reset();
+                    }
+                } catch(err) {}
+            });
+        });
+
+        async function loadPDFs() {
+            try {
+                const res = await fetch('api/notes.php');
+                const notes = await res.json();
+                const tbody = document.getElementById('pdfsTableBody');
+                tbody.innerHTML = '';
+                notes.forEach(note => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="padding: 10px;">${note.subject} (${note.year} ${note.semester})</td>
+                        <td>${note.originalname}</td>
+                        <td>
+                            <button onclick="deleteNote(${note.id})" class="btn btn-outline" style="padding: 4px 10px; font-size: 0.8rem; border-color: red; color: red;">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch(e) {}
+        }
+
+        async function deleteNote(id) {
+            if(confirm('Are you sure you want to delete this note?')) {
+                try {
+                    await fetch('api/notes.php?id=' + id, { method: 'DELETE' });
+                    loadPDFs();
+                } catch(e) {}
+            }
+        }
+
+        async function loadStudents() {
+            try {
+                const res = await fetch('api/students.php');
+                const students = await res.json();
+                const tbody = document.getElementById('studentsTableBody');
+                tbody.innerHTML = '';
+                if(students.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" style="padding: 10px;">No students found</td></tr>';
+                }
+                students.forEach(student => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="padding: 10px;">${student.name}</td>
+                        <td>${student.email}</td>
+                        <td>${student.status}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch(e) {}
+        }
+    </script>
+</body>
+</html>
